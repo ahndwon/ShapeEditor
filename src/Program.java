@@ -81,13 +81,10 @@ public class Program extends PApplet{
                 if (shapes.get(i).isPressed(e.getX(), e.getY())) {
                     index = i;
                     clone = shapes.get(i).clone();
-                    clone.move();
                 }
             }
             if(clone != null) {
-
                 shapes.add(clone);
-
                 draw();
             }
         }
@@ -144,7 +141,7 @@ public class Program extends PApplet{
         } else {
             for (Shape s : shapes) {
                 if (mShape.collisionTest(mShape, s)) {
-                    System.out.println("Overlapped!!");
+                    System.out.println("Collision!!");
                     isCollide = true;
                     return isCollide;
                 }

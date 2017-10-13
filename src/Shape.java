@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+
 import java.io.Serializable;
 
 
@@ -17,16 +18,13 @@ public abstract class Shape implements Cloneable,Serializable {
 
     }
 
+    public void setPoint(float mouseX, float mouseY) {
+        this.point = new Point(mouseX, mouseY);
+    }
 
     public float getWidth() { return width;}
     public Point getPoint() { return point; }
 
-    public void move() {
-        float px = point.getX() + getWidth();
-        float py = point.getY() + getWidth();
-        this.point.setX(px);
-        this.point.setY(py);
-    }
 
     public boolean isPressed(float mouseX, float mouseY) {
         if( point.getX() < mouseX && mouseX< point.getX() + width &&
@@ -47,7 +45,10 @@ public abstract class Shape implements Cloneable,Serializable {
     @Override
     public Shape clone() {
         try {
-            return (Shape) super.clone();
+            Shape clone = (Shape)super.clone();
+            clone.setPoint(clone.getPoint().getX() + clone.getWidth(),
+                    clone.getPoint().getY() + clone.getWidth());
+            return clone;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
             return null;

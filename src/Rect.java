@@ -39,8 +39,6 @@ public class Rect extends Shape {
 
     @Override
     public boolean collisionTest(Shape s1, Shape s2) {
-        float closestX = 0;
-        float closestY = 0;
         Point closestPoint;
         float r1_upperLeftX = s1.getPoint().getX();
         float r1_upperLeftY = s1.getPoint().getY();
@@ -54,8 +52,8 @@ public class Rect extends Shape {
                 r1_upperLeftY + s1.getWidth() > r2_upperLeftY)
             return true;
         } else if ((s1 instanceof Rect) == (s2 instanceof Circle)) {
-            closestX = s2.getPoint().getX();
-            closestY = s2.getPoint().getY();
+            float closestX = s2.getPoint().getX();
+            float closestY = s2.getPoint().getY();
             closestPoint = new Point( closestX, closestY);
 
             if(s2.getPoint().getX() < s1.getPoint().getX()) {
