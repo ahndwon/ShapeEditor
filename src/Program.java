@@ -2,7 +2,6 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import processing.core.PApplet;
@@ -15,8 +14,8 @@ public class Program extends PApplet{
     private int wheelCount = 0;
     private Shape selectedShape = null;
 
-    List<Shape> shapes = new ArrayList<>();
-    int index;
+    private List<Shape> shapes = new ArrayList<>();
+    private int index;
 
     @Override
     public void keyPressed() {
@@ -142,54 +141,34 @@ public class Program extends PApplet{
     }
 
     private void saveFile() {
+        Gson gson = new GsonBuilder()
+                .registerTypeHierarchyAdapter(Shape.class, new ShapeTypeAdapter())
+                .create();
 
-//        //1. Convert object to JSON string
-//        Gson gson = new Gson();
-//        String json = gson.toJson(shapes);
-//        System.out.println(json);
-//
-//        //2. Convert object to JSON string and save into a file directly
-//        try (FileWriter writer = new FileWriter("shapes.txt")) {
-//            gson.toJson(shapes, writer);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        //1. Convert object to JSON string
+        String json = gson.toJson(shapes);
+        System.out.println(json);
 
-        try{
-            FileOutputStream fos= new FileOutputStream("myfile");
-            ObjectOutputStream oos= new ObjectOutputStream(fos);
-            oos.writeObject(shapes);
-            oos.close();
-            fos.close();
-            System.out.println("File Saved");
-        }catch(IOException ioe){
-            ioe.printStackTrace();
+        //2. Convert object to JSON string and save into a file directly
+        try (FileWriter writer = new FileWriter("shapes.txt")) {
+            gson.toJson(shapes, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private void readFile()  {
-        ArrayList<Shape> shapeRead ;
-        try
-        {
-            FileInputStream fis = new FileInputStream("myfile");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            shapeRead = (ArrayList) ois.readObject();
-            ois.close();
-            fis.close();
-            System.out.println("File Loaded");
-        }catch(IOException ioe){
-            ioe.printStackTrace();
-            return;
-        }catch(ClassNotFoundException c){
-            System.out.println("Class not found");
-            c.printStackTrace();
-            return;
-        }
+        try (Reader reader = new FileReader("shapes.txt")) {
+            Gson gson = new GsonBuilder()
+                    .registerTypeHierarchyAdapter(Shape.class, new ShapeTypeAdapter())
+                    .create();
+            // Convert JSON to Java Object
 
-        shapes = new ArrayList<>();
-        for(Shape s : shapeRead){
-            clear();
-            shapes.add(s);
+            Type type = new TypeToken<List<Shape>>(){}.getType();
+            shapes = gson.fromJson(reader, type);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

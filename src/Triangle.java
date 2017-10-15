@@ -4,15 +4,15 @@ import processing.core.PApplet;
 class Triangle extends Shape {
     private transient boolean strokeChanged = false;
 
-    public Triangle( float mouseX, float mouseY) {
+    public Triangle(int mouseX, int mouseY) {
         super( mouseX, mouseY);
     }
 
     @Override
     public boolean collisionTest(Shape s1, Shape s2) {
         if((s1 instanceof Triangle) == (s2 instanceof Triangle)) {
-            float distance = s1.getPoint().distSquared(s2.getPoint());
-            float radiusSum = s2.getWidth() / 2 + s2.getWidth() / 2;
+            int distance = s1.getPoint().distSquared(s2.getPoint());
+            int radiusSum = s2.getWidth() / 2 + s2.getWidth() / 2;
             return distance <= radiusSum * radiusSum;
         }
         return false;

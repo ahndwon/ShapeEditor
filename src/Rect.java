@@ -4,7 +4,7 @@ import processing.core.PApplet;
 public class Rect extends Shape {
     private transient boolean strokeChanged = false;
 
-    public Rect( float mouseX, float mouseY) {
+    public Rect(int mouseX, int mouseY) {
         super( mouseX, mouseY);
     }
 
@@ -25,8 +25,8 @@ public class Rect extends Shape {
         } else
             pApplet.stroke(0);
 
-        float upperLeftX = this.getPoint().getX();
-        float upperLeftY = this.getPoint().getY();
+        int upperLeftX = this.getPoint().getX();
+        int upperLeftY = this.getPoint().getY();
         pApplet.fill(super.getTransparency(),0,0);
         pApplet.rect(upperLeftX ,upperLeftY ,super.getWidth(),super.getWidth());
     }
@@ -39,10 +39,10 @@ public class Rect extends Shape {
     @Override
     public boolean collisionTest(Shape s1, Shape s2) {
         Point closestPoint;
-        float r1_upperLeftX = s1.getPoint().getX();
-        float r1_upperLeftY = s1.getPoint().getY();
-        float r2_upperLeftX = s2.getPoint().getX();
-        float r2_upperLeftY = s2.getPoint().getY();
+        int r1_upperLeftX = s1.getPoint().getX();
+        int r1_upperLeftY = s1.getPoint().getY();
+        int r2_upperLeftX = s2.getPoint().getX();
+        int r2_upperLeftY = s2.getPoint().getY();
 
         if((s1 instanceof Rect) == (s2 instanceof Rect)) {
             if(r1_upperLeftX < r2_upperLeftX + s2.getWidth() &&
@@ -51,8 +51,8 @@ public class Rect extends Shape {
                 r1_upperLeftY + s1.getWidth() > r2_upperLeftY)
             return true;
         } else if ((s1 instanceof Rect) == (s2 instanceof Circle)) {
-            float closestX = s2.getPoint().getX();
-            float closestY = s2.getPoint().getY();
+            int closestX = s2.getPoint().getX();
+            int closestY = s2.getPoint().getY();
             closestPoint = new Point( closestX, closestY);
 
             if(s2.getPoint().getX() < s1.getPoint().getX()) {

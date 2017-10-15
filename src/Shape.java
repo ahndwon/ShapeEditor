@@ -1,10 +1,8 @@
 import processing.core.PApplet;
-
 import java.io.Serializable;
 
-
 public abstract class Shape implements Cloneable,Serializable {
-    private final static int width  = 30;
+    private int width = 30;
     private int transparency = 125;
     private Point point;
 
@@ -13,25 +11,23 @@ public abstract class Shape implements Cloneable,Serializable {
     public abstract void exitHover();
     public abstract boolean collisionTest(Shape s1, Shape s2);
 
-    public Shape( float mouseX, float mouseY) {
+    public Shape(int mouseX, int mouseY) {
             point = new Point(mouseX, mouseY);
 
     }
 
-    public void setPoint(float mouseX, float mouseY) {
+    public void setPoint(int mouseX, int mouseY) {
         this.point = new Point(mouseX, mouseY);
     }
-
-    public float getWidth() { return width;}
     public Point getPoint() { return point; }
 
 
-    public boolean isPressed(float mouseX, float mouseY) {
-        if( point.getX() < mouseX && mouseX< point.getX() + width &&
-                point.getY() <mouseY && mouseY < point.getY() + width){
-            return true;
-        } else
-            return false;
+    public int getWidth() { return width;}
+
+
+    public boolean isPressed(int mouseX, int mouseY) {
+        return point.getX() < mouseX && mouseX < point.getX() + width &&
+                point.getY() < mouseY && mouseY < point.getY() + width;
     }
 
     public void setTransparency(int wheelCount) {

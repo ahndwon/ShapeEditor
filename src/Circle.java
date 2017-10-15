@@ -3,7 +3,7 @@ import processing.core.PApplet;
 class Circle extends Shape {
     private transient boolean strokeChanged = false;
 
-    public Circle( float mouseX, float mouseY) {
+    public Circle(int mouseX, int mouseY) {
             super( mouseX, mouseY);
     }
 
@@ -23,8 +23,8 @@ class Circle extends Shape {
             pApplet.stroke(255);
         } else
             pApplet.stroke(0);
-        float centerX = this.getPoint().getX() + super.getWidth()/2;
-        float centerY = this.getPoint().getY() + super.getWidth()/2;
+        int centerX = this.getPoint().getX() + super.getWidth()/2;
+        int centerY = this.getPoint().getY() + super.getWidth()/2;
         pApplet.fill(0,super.getTransparency(),0);
         pApplet.ellipse(centerX, centerY,
                 super.getWidth(), super.getWidth());
@@ -40,12 +40,12 @@ class Circle extends Shape {
         Point closestPoint;
 
         if((s1 instanceof Circle) == (s2 instanceof Circle)) {
-            float distance = s1.getPoint().distSquared(s2.getPoint());
-            float radiusSum = s2.getWidth() / 2 + s2.getWidth() / 2;
+            int distance = s1.getPoint().distSquared(s2.getPoint());
+            int radiusSum = s2.getWidth() / 2 + s2.getWidth() / 2;
             return distance <= radiusSum * radiusSum;
         } else if ((s1 instanceof Circle) == (s2 instanceof Rect)) {
-            float closestX = s1.getPoint().getX();
-            float closestY = s1.getPoint().getY();
+            int closestX = s1.getPoint().getX();
+            int closestY = s1.getPoint().getY();
 
             closestPoint = new Point( closestX, closestY);
 
