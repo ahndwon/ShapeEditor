@@ -2,8 +2,7 @@ import processing.core.PApplet;
 
 
 public class Rect extends Shape {
-    private float width = this.getWidth();
-    private boolean strokeChanged = false;
+    private transient boolean strokeChanged = false;
 
     public Rect( float mouseX, float mouseY) {
         super( mouseX, mouseY);
@@ -29,7 +28,7 @@ public class Rect extends Shape {
         float upperLeftX = this.getPoint().getX();
         float upperLeftY = this.getPoint().getY();
         pApplet.fill(super.getTransparency(),0,0);
-        pApplet.rect(upperLeftX ,upperLeftY ,width,width);
+        pApplet.rect(upperLeftX ,upperLeftY ,super.getWidth(),super.getWidth());
     }
 
     @Override

@@ -1,6 +1,10 @@
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
@@ -51,18 +55,11 @@ public class Program extends PApplet{
                 break;
 
             case 's' :
-                try{saveFile();}
-                catch(IOException e) { e.printStackTrace(); }
+                saveFile();
                 break;
 
             case 'o' :
-                try {
-                    readFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                readFile();
                 break;
         }
     }
@@ -99,8 +96,6 @@ public class Program extends PApplet{
                 shapes.get(i).exitHover();
             }
         }
-
-
     }
 
     public void mouseWheel(MouseEvent e) {
@@ -109,10 +104,8 @@ public class Program extends PApplet{
             selectedShape.setTransparency(wheelCount);
         } else
             System.out.println("selectedShape is null");
-
-
-
     }
+
     public void mouseDragged(MouseEvent e) {
         if(!duplicateMode) {
             shapes.get(index).getPoint().setX(this.mouseX);
@@ -134,24 +127,34 @@ public class Program extends PApplet{
     }
 
     public boolean isCollide(Shape mShape, List<Shape> shapes) {
-        boolean isCollide;
+        boolean isCollide = false;
         if (shapes.size()==0) {
             isCollide = false;
-            return isCollide;
+
         } else {
             for (Shape s : shapes) {
                 if (mShape.collisionTest(mShape, s)) {
                     System.out.println("Collision!!");
                     isCollide = true;
-                    return isCollide;
                 }
             }
-            isCollide = false;
-            return isCollide;
-        }
+        }return isCollide;
     }
 
-    private void saveFile() throws IOException {
+    private void saveFile() {
+
+//        //1. Convert object to JSON string
+//        Gson gson = new Gson();
+//        String json = gson.toJson(shapes);
+//        System.out.println(json);
+//
+//        //2. Convert object to JSON string and save into a file directly
+//        try (FileWriter writer = new FileWriter("shapes.txt")) {
+//            gson.toJson(shapes, writer);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         try{
             FileOutputStream fos= new FileOutputStream("myfile");
             ObjectOutputStream oos= new ObjectOutputStream(fos);
@@ -164,7 +167,7 @@ public class Program extends PApplet{
         }
     }
 
-    private void readFile() throws IOException, ClassNotFoundException {
+    private void readFile()  {
         ArrayList<Shape> shapeRead ;
         try
         {
@@ -206,6 +209,7 @@ public class Program extends PApplet{
         System.out.println("Drag Object by Dragging");
         System.out.println("Change Objects's color by Scrolling after selecting it");
     }
+
 }
 
 

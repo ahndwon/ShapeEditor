@@ -2,8 +2,7 @@ import processing.core.PApplet;
 
 
 class Triangle extends Shape {
-    private float width = this.getWidth();
-    private boolean strokeChanged = false;
+    private transient boolean strokeChanged = false;
 
     public Triangle( float mouseX, float mouseY) {
         super( mouseX, mouseY);
@@ -37,9 +36,9 @@ class Triangle extends Shape {
             pApplet.stroke(0);
 
         pApplet.fill(0,0,super.getTransparency());
-        pApplet.triangle(this.getPoint().getX() , this.getPoint().getY() + width ,
-                this.getPoint().getX() + width/2, this.getPoint().getY(),
-                this.getPoint().getX() + width, this.getPoint().getY() + width);
+        pApplet.triangle(this.getPoint().getX() , this.getPoint().getY() + super.getWidth() ,
+                this.getPoint().getX() + super.getWidth()/2, this.getPoint().getY(),
+                this.getPoint().getX() + super.getWidth(), this.getPoint().getY() + super.getWidth());
     }
 
     @Override

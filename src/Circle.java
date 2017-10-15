@@ -1,9 +1,7 @@
 import processing.core.PApplet;
 
 class Circle extends Shape {
-    private float radius = this.getWidth()/2;
-    private boolean strokeChanged = false;
-
+    private transient boolean strokeChanged = false;
 
     public Circle( float mouseX, float mouseY) {
             super( mouseX, mouseY);
@@ -25,11 +23,11 @@ class Circle extends Shape {
             pApplet.stroke(255);
         } else
             pApplet.stroke(0);
-        float centerX = this.getPoint().getX() + getWidth()/2;
-        float centerY = this.getPoint().getY() + getWidth()/2;
+        float centerX = this.getPoint().getX() + super.getWidth()/2;
+        float centerY = this.getPoint().getY() + super.getWidth()/2;
         pApplet.fill(0,super.getTransparency(),0);
         pApplet.ellipse(centerX, centerY,
-                getWidth(), getWidth());
+                super.getWidth(), super.getWidth());
     }
 
     @Override
